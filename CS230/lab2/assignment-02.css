@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+
+
+
+.mainPage {
+    position: relative;
+    z-index: 1;
+    /*because I want to put four button cover with this element */
+    /*so I make it as relative , and others is absolute , 1 mean the lowest one*/
+    width: 500px;
+    height: 500px;
+
+    padding: 30px 20px 10px 50px; /*padding: top right bottom left;*/
+    border-radius: 50%;
+    background-color: black;
+    margin: auto;
+    /*put in the middle*/
+    box-shadow: inset 0px 4px 1px 0px darkgrey;
+    border: 3px solid black;
+    /*background: linear-gradient(to bottom, grey, 5%, black);*/
+    /*https://box-shadow.art/design/b7452ac29014929f24b57c08fd023d43/ to generate shadow*/
+}
+.light {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    margin: 40px auto 0px auto;
+}
+
+.panel {
+    justify-content: center;
+    align-items: center;
+    /*for center */
+    width:70px;
+    height: 10px;
+    font-family: 'Orbitron', sans-serif;
+    background-color: lightgray;
+    border-radius: 3px;
+    border: grey;
+    padding: 2px 12px 2px 12px;
+    font-size: 2rem;
+    margin: auto 2px;
+}
+
+#middle {
+    cursor: pointer;
+}
+#middle:hover {
+    color: lightgray;
+    background-color: black;
+    border: 1px solid lightgray;
+}
+
+.controlPanel {
+
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    transform: translateY(350%);
+}
+
+
+
+.flash {
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: green;
+    box-shadow: inset 0px 3px 1px 0px lightgray;
+    border: 15px solid black;
+    /*background: linear-gradient(to bottom, grey, 5%, black);*/
+    /*https://box-shadow.art/design/b7452ac29014929f24b57c08fd023d43/ to generate shadow*/
+}
+
+.flash:active {
+    transform: translateY(2px);
+}
+/*https://www.w3schools.com/css/css_grid.asp lean how to use grid*/
+
+.grid-container {
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    display: grid;
+    grid-template-columns: repeat(2, 250px); /* Two columns */
+    grid-template-rows: repeat(2, auto); /* Two rows */
+    grid-gap: 200px; /* Add some spacing between the elements */
+    margin: auto; /* make it center  */
+
+    transform: translateY(10%);  /*change to correct position  */
+}
+
+.green {
+    background-color: hsl(100, 30%, 20%);
+    grid-row: 1;
+    grid-column: 1 ;
+}
+.green:hover{
+    background-color: hsl(100, 100%, 50%);
+
+}
+
+.red {
+    background-color: hsl(0, 30%, 20%);
+    grid-row: 1;
+    grid-column: 2;
+}
+.red:hover{
+    background-color: hsl(0, 100%, 50%);
+}
+
+.yellow {
+    background-color: hsl(60, 30%, 20%);
+    grid-row: 2;
+    grid-column: 1;
+}
+.yellow:hover{
+    background-color: hsl(60, 100%, 50%);
+}
+
+.blue {
+    background-color: hsl(240, 30%, 20%);
+    grid-row: 2;
+    grid-column: 2;
+}
+.blue:hover{
+    background-color: hsl(240, 100%, 50%);
+}
+
+.flash {
+    cursor: pointer;
+}
