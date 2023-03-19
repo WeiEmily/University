@@ -1,0 +1,165 @@
+:root {
+    --trap-width: 100%;
+}
+
+.options {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+.options .opt2 {
+    padding-top: 20px;
+}
+
+.info {
+    font-size: larger;
+}
+
+#opt1Btn, #opt2Btn {
+    padding: 4px 4px 4px 4px;
+    font-size: larger;
+    border-radius: 7px;
+    border: 2px solid;
+    background: pink;
+}
+#opt1Btn:hover, #opt2Btn:hover {
+    background: #f4b600;
+    cursor: pointer;
+}
+
+#triangle {
+    width: 800px;
+    height: 800px;
+    background-color: wheat;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    margin: auto auto;
+}
+.trapezium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto auto;
+    width: var(--trap-width);
+    height: 100px;
+}
+.l1{
+    background-color: #ea1b07;
+    height: 150px;
+}
+.l1 p{
+    margin-top: 10%;
+}
+
+.blank1{
+    width: var(--trap-width);
+    height: 10px;
+    background-color: #ffffff;
+}
+
+.l2{
+    background-color: #f4b600;
+}
+
+.blank2{
+    width: var(--trap-width);
+    height: 10px;
+    background-color: #ffffff;
+}
+
+.l3{
+    background-color: #f9e029;
+}
+
+.l4{
+    background-color: #049dfc;
+}
+
+.l5{
+    background-color: #a77643;
+}
+
+.l6{
+    background-color: #5cd533;
+    height: 120px;
+}
+
+.circle {
+    display: inline-block;
+    border-radius: 50%;
+    border: 3px solid;
+    font-size: 20px;
+    background-color: white;
+    user-select: none
+    /* gets rid of annoying text select */
+}
+
+.circle:before,
+.circle:after {
+    content: "\200B";
+    display: inline-block;
+    line-height: 0px;
+    padding-top: 50%;
+    padding-bottom: 50%;
+}
+
+.circle::before {
+    padding-left: 0.35em;
+}
+
+.circle::after {
+    padding-right: 0.35em;
+}
+
+.plus:hover , .minus:hover {
+    background-color: coral;
+    cursor: pointer;
+}
+
+.hide1 ,.hide2, .hide3,.hide4, .hide5, .hide6 {
+    visibility: hidden;
+}
+.l1:hover .hide1{
+    visibility: visible;
+}
+
+.l2:hover .hide2{
+    visibility: visible;
+}
+
+.l3:hover .hide3{
+    visibility: visible;
+}
+.l4:hover .hide4{
+    visibility: visible;
+}
+.l5:hover .hide5{
+    visibility: visible;
+}
+.l6:hover .hide6{
+    visibility: visible;
+}
+.data{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font: 30px/30px Arial, sans-serif;
+}
+label input {
+    margin: auto;
+    display: flex;
+}
+
+.error-message {
+    color: red;
+    font-size: 15px;
+}
+
+#currData {
+    display: block;
+    color: rgb(9, 255, 0);
+    font-size: 20px;
+}
+
+
