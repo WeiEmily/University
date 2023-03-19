@@ -1,3 +1,5 @@
+package CS211Lab1;
+
 public class QueuePoI<E> implements Queue<E> {
     private static class Node<E> {
         private E element;

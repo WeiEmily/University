@@ -1,3 +1,5 @@
+package CS211Lab1;
+
 public interface Queue<E> {
     /**
      * Returns the number of elements in the queue.
