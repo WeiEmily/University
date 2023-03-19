@@ -1,4 +1,4 @@
-package CS211Week2;
+package CS211Lab2;
 
 public class Main {
     public static void main(String[] args) {

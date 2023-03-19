@@ -1,6 +1,6 @@
 package CS211Lab1;
 
-public class lab1 {
+public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PoI p1 = new PoI("Ireland", "dublin");
