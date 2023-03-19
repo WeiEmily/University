@@ -7,10 +7,46 @@ public class Main {
 		PoI p1 = new PoI("Ireland", "dublin");
 		PoI p2 = new PoI("Ireland", "dublin");
 		PoI p3 = new PoI("Ireland", "dublin");
-		
-		SinglyLinkedList<PoI> box = new SinglyLinkedList<PoI>();
-	
-		
+
+		QueuePoI<Integer> list = new QueuePoI<>();
+		QueuePoI<Integer> secondList = new QueuePoI<>();
+
+		list.enqueue(2);
+		list.enqueue(4);
+		list.enqueue(6);
+		list.dequeue();
+
+		secondList.enqueue(15);
+		secondList.enqueue(14);
+
+		list.dequeue();
+
+		list.concatenate(secondList);
+
+		System.out.println(list.size());
+
+		while(!list.isEmpty()){
+			System.out.print(list.dequeue());
+			System.out.print("->");
+		}
+		System.out.println();
+		System.out.println("--------------------------------------");
+		StackPoI<Integer> stack = new StackPoI<>();
+		StackPoI<Integer> secondStack = new StackPoI<>();
+
+		stack.push(11);
+		stack.push(12);
+		stack.push(13);
+
+		secondStack.push(14);
+		secondStack.push(15);
+
+		stack.concatenate(secondStack);
+
+		while(!stack.isEmpty()){
+			System.out.print(stack.pop());
+			System.out.print("->");
+		}
 	}
 	
 	
