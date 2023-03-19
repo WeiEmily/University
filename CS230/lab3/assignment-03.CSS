@@ -1,0 +1,46 @@
+Table {
+    font-family: arial, sans-serif;
+    /* border-collapse: collapse; */
+    width: 100%;
+}
+
+Table th {
+    border: 1px solid #171616;
+    text-align: center;
+    padding: 8px;
+    background-color: #4c4c4c;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #bdbdbd;
+}
+tr:nth-child(odd) {
+    background-color: #848484;
+}
+td {
+    text-align: center;
+}
+td.name, td.id  {
+    text-align: left;
+}
+.data th {
+   
+    text-align: center;
+    padding: 10px;
+    background-color: #839976;
+    color: rgb(41, 8, 8);
+}
+
+#addRow {
+    cursor: point;
+}
+
+.low-grade {
+    background-color: red;
+    color: white;
+}
+
+.clickable{
+    cursor: pointer;
+}
