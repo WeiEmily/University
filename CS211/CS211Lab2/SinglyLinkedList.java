@@ -186,7 +186,7 @@ public class SinglyLinkedList<E> {
         while (walk != null) {
             sb.append(walk.getElement());
             if (walk != tail)
-                sb.append(", ");
+                sb.append(" -> ");
             walk = walk.getNext();
         }
         sb.append(")");
@@ -216,4 +216,21 @@ public class SinglyLinkedList<E> {
     }
 
 
+
+    public void rotate () {
+
+
+        try {
+//            tail.setNext(new Node<>(first(),null));
+//
+//            head = head.next;
+//            tail = tail.next;
+            addLast(removeFirst());
+
+        }catch (Exception error){
+            System.out.println("ERROR");
+            System.out.println(error);
+        }
+
+    }
 }

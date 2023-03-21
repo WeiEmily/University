@@ -19,18 +19,10 @@ public class Main {
         link.addLast(T4);
         link.addLast(T5);
         link.addLast(T6);
-//        first method print
-      // System.out.println(link);
-
-      Print(link);
-       // link.print();
-
-
-
 
         try {
             Task answer = link.seToLast();
-            System.out.println(answer);
+            System.out.println("the second is "+answer);
         } catch (Exception e) {
             //throw new RuntimeException(e);
             System.out.println("not exist");
@@ -39,18 +31,43 @@ public class Main {
             System.out.println("I am in final block");
         }
 
+//        first method print
+      // System.out.println(link);
+
+      link.print();
+       // link.print();
+
+//-----------------------------------------------------------------------------
+        //LAB2 Friday
+        Order O1 = new Order("C1", "Banana cake", 60);
+        Order O2 = new Order("C2", "Cheesecake", 20);
+        Order O3 = new Order("C3", "Chocolate coconut cake", 40);
+        Order O4 = new Order("C4", "Carrot and walnut cake", 80);
+
+        //create SinglyLinkedList object to restore the Tasks
+        SinglyLinkedList<Order> linkCake = new SinglyLinkedList<>();
+        linkCake.addLast(O1);
+        linkCake.addLast(O2);
+        linkCake.addLast(O3);
+        linkCake.addLast(O4);
+
+        System.out.println(linkCake.toString());
+        linkCake.rotate();
+
+
+        System.out.println(linkCake.toString());
 
     }
 
-    public  static void Print(SinglyLinkedList<Task> s){
-
-        while (!s.isEmpty()){
-            System.out.println(s.first());
-            s.removeFirst();
-
-
-        }
-    }
+//    public  static void Print(SinglyLinkedList<Task> s){
+//
+//        while (!s.isEmpty()){
+//            System.out.print(s.first());
+//            s.removeFirst();
+//            System.out.print("->");
+//        }
+//        System.out.println();
+//    }
 
 
 }
