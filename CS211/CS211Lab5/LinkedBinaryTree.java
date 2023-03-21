@@ -81,7 +81,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     // LinkedBinaryTree instance variables
     /** The root of the binary tree */
-    protected Node<E> root = null;     // root of the tree
+    public Node<E> root = null;     // root of the tree
 
     /** The number of nodes in the binary tree */
     private int size = 0;              // number of nodes in the tree
