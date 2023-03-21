@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        :root {
+            --trap-width: 100%;
+        }
+        
+        .options {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+        .options .opt2 {
+            padding-top: 20px;
+        }
+        
+        .info {
+            font-size: larger;
+        }
+        
+        #opt1Btn, #opt2Btn {
+            padding: 4px 4px 4px 4px;
+            font-size: larger;
+            border-radius: 7px;
+            border: 2px solid;
+            background: pink;
+        }
+        #opt1Btn:hover, #opt2Btn:hover {
+            background: #f4b600;
+            cursor: pointer;
+        }
+        
+        #triangle {
+            width: 800px;
+            height: 800px;
+            background-color: wheat;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            margin: auto auto;
+        }
+        .trapezium {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto auto;
+            width: var(--trap-width);
+            height: 100px;
+        }
+        .l1{
+            background-color: #ea1b07;
+            height: 150px;
+        }
+        .l1 p{
+            margin-top: 10%;
+        }
+        
+        .blank1{
+            width: var(--trap-width);
+            height: 10px;
+            background-color: #ffffff;
+        }
+        
+        .l2{
+            background-color: #f4b600;
+        }
+        
+        .blank2{
+            width: var(--trap-width);
+            height: 10px;
+            background-color: #ffffff;
+        }
+        
+        .l3{
+            background-color: #f9e029;
+        }
+        
+        .l4{
+            background-color: #049dfc;
+        }
+        
+        .l5{
+            background-color: #a77643;
+        }
+        
+        .l6{
+            background-color: #5cd533;
+            height: 120px;
+        }
+        
+        .circle {
+            display: inline-block;
+            border-radius: 50%;
+            border: 3px solid;
+            font-size: 20px;
+            background-color: white;
+            user-select: none
+            /* gets rid of annoying text select */
+        }
+        
+        .circle:before,
+        .circle:after {
+            content: "\200B";
+            display: inline-block;
+            line-height: 0px;
+            padding-top: 50%;
+            padding-bottom: 50%;
+        }
+        
+        .circle::before {
+            padding-left: 0.35em;
+        }
+        
+        .circle::after {
+            padding-right: 0.35em;
+        }
+        
+        .plus:hover , .minus:hover {
+            background-color: coral;
+            cursor: pointer;
+        }
+        
+        .hide1 ,.hide2, .hide3,.hide4, .hide5, .hide6 {
+            visibility: hidden;
+        }
+        .l1:hover .hide1{
+            visibility: visible;
+        }
+        
+        .l2:hover .hide2{
+            visibility: visible;
+        }
+        
+        .l3:hover .hide3{
+            visibility: visible;
+        }
+        .l4:hover .hide4{
+            visibility: visible;
+        }
+        .l5:hover .hide5{
+            visibility: visible;
+        }
+        .l6:hover .hide6{
+            visibility: visible;
+        }
+        .data{
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            font: 30px/30px Arial, sans-serif;
+        }
+        label input {
+            margin: auto;
+            display: flex;
+        }
+        
+        .error-message {
+            color: red;
+            font-size: 15px;
+        }
+        
+        #currData {
+            display: block;
+            color: rgb(9, 255, 0);
+            font-size: 20px;
+        }
+        
+        
+        
+
+    </style>
+</head>
+<body>
+<div class="options">
+    <div class="opt1">
+        <span class="info">1 - 4 year old children recommended intake </span>
+        <span id="opt1Btn">check</span>
+    </div>
+
+    <div class="opt2">
+        <span class="info">5- more age recommended intake</span>
+        <span id="opt2Btn">check</span>
+    </div>
+</div>
+<div>
+    <div class="pyramid">
+        <div id="triangle">
+
+            <div class="trapezium l1">
+                <p  >
+                    <span class="plus circle hide1">+</span>
+                    <span class="num circle">2</span>
+                    <span class="minus circle hide1">-</span>
+                </p>
+            </div>
+
+            <div class="blank1"></div>
+
+            <div class="trapezium l2">
+                <p  >
+                <span class="plus circle hide2">+</span>
+                <span class="num circle">4</span>
+                <span class="minus circle hide2">-</span>
+                </p>
+            </div>
+
+            <div class="blank2"></div>
+
+            <div class="trapezium l3">
+                <p >
+                <span class="plus circle hide3">+</span>
+                <span class="num circle">3</span>
+                <span class="minus circle hide3">-</span>
+                </p>
+            </div>
+
+            <div class="trapezium l4">
+                <p>
+                <span class="plus circle hide4">+</span>
+                <span class="num circle">3</span>
+                <span class="minus circle hide4">-</span>
+                </p>
+            </div>
+
+            <div class="trapezium l5">
+                <p>
+                <span class="plus circle hide5">+</span>
+                <span class="num circle">4</span>
+                <span class="minus circle hide5">-</span>
+                </p>
+            </div>
+
+            <div class="trapezium l6">
+                <p>
+                    <span class="plus circle hide6">+</span>
+                    <span class="num circle">6</span>
+                    <span class="minus circle hide6">-</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="data">
+            <label for="date-input">My Food Pyramid</label><br />
+            <input type="text" id="date-input" placeholder="YYYY-MM-DD">
+            
+            <span id="date-error-message" class="error-message"></span>
+            <span id="currData"></span>
+    </div>
+
+</div>
+
+
+</body>
+<script>
+
+    const trapElement = document.querySelectorAll(".trapezium");
+const triangleElement = document.getElementById("triangle");
+const nums = document.querySelectorAll(".num");
+
+let optStatus = "adult"; //inital the statue is for adult
+//variables of two button
+const opt1 = document.querySelector("#opt1Btn");
+const opt2 = document.querySelector("#opt2Btn");
+
+
+
+let childArr = [1, 2, 2, 4, 5, 5]; //child array
+let adultArr = [2, 4, 3, 3, 4, 6]; //adult array
+
+const plusBtu = document.querySelectorAll(".plus");
+const minusBtu = document.querySelectorAll(".minus");
+
+opt1.addEventListener("click", function () {
+    if (optStatus === "adult") {
+        for (let i = 0; i < childArr.length; i++) {
+            if (i === 0) {
+                trapElement.item(i).style.height = 150 + "px";
+            }else if( i === 5) {
+                trapElement.item(i).style.height = 120 + "px";
+            }else{
+                trapElement.item(i).style.height = 100 + "px";
+            }
+            nums.item(i).innerHTML = childArr[i];
+            plusBtu[i].style.borderColor = "#000000";
+            minusBtu[i].style.borderColor = "#000000";
+            nums[i].style.borderColor = "#000000";
+        }
+    }
+    optStatus = "child";
+});
+
+
+opt2.addEventListener("click", function () {
+    if (optStatus === "child") {
+        for (let i = 0; i < adultArr.length; i++) {
+            if (i === 0) {
+                trapElement.item(i).style.height = 150 + "px";
+            }else if( i === 5) {
+                trapElement.item(i).style.height = 120 + "px";
+            }else{
+                trapElement.item(i).style.height = 100 + "px";
+            }
+            nums.item(i).innerHTML = adultArr[i];
+            plusBtu[i].style.borderColor = "#000000";
+            minusBtu[i].style.borderColor = "#000000";
+            nums[i].style.borderColor = "#000000";
+        }
+    }
+    optStatus = "adult";
+});
+
+
+
+function cacuHeight() {
+    let totalHeight = 0;
+    trapElement.forEach((element) => {
+        totalHeight += element.offsetHeight;
+    });
+    return totalHeight;
+}
+
+function updateTriangleHeight() {
+    const totalHeight = cacuHeight();
+    triangleElement.style.height = totalHeight + "px";
+}
+//initial
+updateTriangleHeight();
+
+
+for (let i = 0; i < nums.length; i++) {
+    nums[i].addEventListener("DOMSubtreeModified", function () {
+        const testNum = Number(nums[i].innerHTML);
+        if (
+            (optStatus === "adult" && testNum > adultArr[i]) ||
+            (optStatus === "child" && testNum > childArr[i])
+        ) {
+            plusBtu[i].style.borderColor = "#cb4e2f";
+            minusBtu[i].style.borderColor = "#cb4e2f";
+            nums[i].style.borderColor = "#cb4e2f";
+        } else if (
+            (optStatus === "adult" && testNum === adultArr[i]) ||
+            (optStatus === "child" && testNum === childArr[i])
+        ) {
+            plusBtu[i].style.borderColor = "#000000";
+            minusBtu[i].style.borderColor = "#000000";
+            nums[i].style.borderColor = "#000000";
+        } else if (
+            (optStatus === "adult" && testNum < adultArr[i]) ||
+            (optStatus === "child" && testNum < childArr[i])
+        ) {
+            plusBtu[i].style.borderColor = "#5479c4";
+            minusBtu[i].style.borderColor = "#5479c4";
+            nums[i].style.borderColor = "#5479c4";
+        }
+    });
+}
+
+
+trapElement.forEach((element) => {
+    const addButton = element.querySelector(".plus");
+    const minusButton = element.querySelector(".minus");
+    const nums = element.querySelector(".num");
+
+    addButton.addEventListener("click", () => {
+        let height = parseInt(element.offsetHeight, 10);
+        height += 3;
+        nums.innerHTML++;
+        element.style.height = height + "px";
+    });
+
+    minusButton.addEventListener("click", () => {
+        let height = parseInt(element.offsetHeight, 10);
+        height -= 3;
+        nums.innerHTML--;
+        element.style.height = height + "px";
+    });
+});
+
+
+const dateInput = document.getElementById('date-input');
+const dateErrorMessage = document.getElementById('date-error-message');
+const currData = document.getElementById('currData');
+
+// add a eventListener keyup ，when user enter input check it
+dateInput.addEventListener('keyup', function() {
+    const value = this.value;
+    if (!isValidDate(value)) {
+        dateErrorMessage.textContent = 'invalid data format, please input again';
+    } else {
+        dateErrorMessage.textContent ='';
+        currData.textContent = value;
+    }
+});
+
+function isValidDate(dateString) {
+    if (dateString.length !== 10) {
+        return false;
+    }
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(5, 7);
+    const day = dateString.substring(8, 10);
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        return false;
+    }
+    const date = new Date(year, month - 1, day);
+    return (
+        date.getFullYear() === Number(year) &&
+        date.getMonth() === Number(month) - 1 &&
+        date.getDate() === Number(day)
+    );
+
+}
+
+
+//observe event
+trapElement.forEach((element) => {
+    new ResizeObserver(updateTriangleHeight).observe(element);
+});
+
+
+
+
+
+
+
+
+</script>
+</html>

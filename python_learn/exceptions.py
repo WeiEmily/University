@@ -5,7 +5,7 @@ try:
     y = int(input("y: "))
 except ValueError:
     print("it's not integer ")
-    sys.exit(0)
+    sys.exit(1)
     
 try:
     result = x / y 
