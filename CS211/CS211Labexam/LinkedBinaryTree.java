@@ -408,6 +408,8 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         set(q, temp2.element);
     }
 
+
+
     public int countExt( Position<E> p){
         Node<E> checkNode = validate(p);
         if(isRoot(checkNode) && numChildren(root) != 0){
@@ -484,8 +486,18 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 //        return h;
 //    }
 
-
-
+    // Sorry I make two question together so I upload twice
+    public boolean properTree( Position<E> p){
+        if(numChildren(p) == 2){
+            return properTree(left(p)) && properTree(right(p));
+        }
+        else if(numChildren(p) == 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
 
 
