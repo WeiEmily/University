@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #add two new app in project 
+    'tasks',
     'newyear',
     'hello',
     'django.contrib.admin',
