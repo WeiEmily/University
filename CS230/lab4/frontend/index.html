@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- navigation bar -->
+    <nav class="navbar navbar-light justify-content-center fs-3 mb-5 alert alert-success"  role="alert">
+        All User Information
+    </nav>
+    
+    <!-- search bar -->
+    <div class="container  mb-5 " >
+        <form id="searchForm" class="d-flex mb-3 justify-content-center" >
+            <input id="searchItem" class="border border-3 border-top-0 border-start-0 border-end-0"  placeholder="Firstname_Surname or ID" style=" width: 50%; outline: none " >
+            <button class="btn btn-primary" type="submit" value="Submit">Search</button>
+        </form>
+    </div>
+
+    
+
+    <!-- add button and the table  -->
+    <div class="container">
+       
+       
+        <button id="addUser" type="button" class="btn btn-dark mb-3" data-bs-toggle="modal" data-bs-target="#createData" >Add User</button>
+        <button id="button1" class="btn btn-dark mb-3">show all user</button>
+        <!-- head  -->
+        <table class="table table-hover text-center">
+          <thead class="table-danger">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Email</th>
+              <th scope="col">Addressline1</th>
+              <th scope="col">Addressline2</th>
+              <th scope="col">Town</th>
+              <th scope="col">County</th>
+              <th scope="col">Eircode</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="users"></tbody> 
+        
+        </table>
+    </div>
+
+    <div class="modal fade" id="createData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="data_form" action="" method="post" style="min-width:300px">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">New user information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <!-- select titile -->
+                      <!-- https://stackoverflow.com/questions/14578559/php-html-send-html-select-option-attribute-in-post -->
+                      <select class="form-select mb-3" name="title" aria-label=".form-select-lg" >
+                          <option selected>Title select menu</option>
+                          <option value="Mx">Mx</option>
+                          <option value="Ms">Ms</option>
+                          <option value="Mr">Mr</option>
+                          <option value="Mrs">Mrs</option>
+                          <option value="Miss">Miss</option>
+                          <option value="Dr">Dr</option>
+                          <option value="Other">Other</option>
+                      </select>
+              
+                         <!-- Frist name -->
+                          
+                         <div class="form-floating col mb-3">
+                          <input type="text" class="form-control"  name="firstname" placeholder="Emily">
+                          <label for="floatingInput">First Name*</label>
+                        </div>
+                          <!-- sur name -->
+                      <div class="col form-floating mb-3">
+                          <input type="text" class="form-control"  name="surname" placeholder="Einstein">
+                          <label for="floatingInput">Surname*</label>
+                      </div>
+          
+                      <!--  mobile -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="mobile" placeholder="0123456789">
+                          <label for="floatingInput">Mobile*</label>
+                      </div>
+                      <!--  email -->
+                      <div class="form-floating mb-3">
+                          <input type="email" class="form-control" name="email" placeholder="name@example.com">
+                          <label for="floatingInput">Email address*</label>
+                      </div>
+
+                       <!--  Address Line	1 -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="address_line_1" placeholder="acdfgths">
+                          <label for="floatingInput">Address Line	1*</label>
+                      </div>
+                      <!--  Address Line	2 -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="address_line_2" placeholder="0123456789">
+                          <label for="floatingInput">Address Line 2</label>
+                      </div>
+                      <!--  Town -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="town" placeholder="0123456789">
+                          <label for="floatingInput">Town*</label>
+                      </div>
+                      <!--  County/City -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="county_city" placeholder="0123456789">
+                          <label for="floatingInput">County/City*</label>
+                      </div>
+                      <!--  Eircode -->
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control"  name="eircode" placeholder="0123456789">
+                          <label for="floatingInput">Eircode</label>
+                      </div>
+                      <div id="msg"></div>
+                      
+                      <div class="modal-footer">
+                        <input type="hidden" name="id"  />
+                        <input type="hidden" name="action" id = "action" value="Add" />
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id="action_button">Create User</button>
+                      </div>
+                  </div> 
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <script src="Ajax.js"></script>
+
+   
+    <!-- bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
