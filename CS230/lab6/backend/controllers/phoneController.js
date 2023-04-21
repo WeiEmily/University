@@ -1,9 +1,6 @@
 
 const Phone = require('../models/phoneModel');
 const asyncHandler = require('express-async-handler');
-
-
-
 //@desc Get all phones
 //@route  GET /phones
 //@access  Public
