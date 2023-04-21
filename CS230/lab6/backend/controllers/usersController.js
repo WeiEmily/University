@@ -1,9 +1,7 @@
 //import middleware 
 const asyncHandler = require('express-async-handler')
-const multer = require('multer');
-const upload = multer();
 const User = require('../models/userModel')
-const Address = require('../models/addressModel')
+
 const url = require('url');
 const querystring = require('querystring'); //import it to parse params , this page use it t change address 
 
@@ -14,14 +12,12 @@ const querystring = require('querystring'); //import it to parse params , this p
 //@access  Public
 const getUsers = asyncHandler(async (req, res) => {
     const Users = await User.find({})
-
     res.status(200).json(Users)
 })
 
 //@desc search user by email 
 //@route  GET /user/email
 //@access  Public
-
 const searchByEmail = asyncHandler(async (req, res, next) => {
     const Users = await User.findOne({ email: req.query.email });
     if (!Users) {
@@ -60,7 +56,6 @@ const createUser = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Please add all fields')
     }
-
     // Create user
     const user = await User.create({
         title,
@@ -94,10 +89,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
         error.status = 401;
         return next(error);
     }
-    //get information from body
-    const { title, firstname, surname, mobile, email, address_line1, address_line2, town, city, eircode } = req.body;
-    //check user fill in all blanks 
-
     const updatedUser = await User.findByIdAndUpdate(req.query._id, req.body, {
         new: true,
     })

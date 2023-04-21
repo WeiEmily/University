@@ -3,21 +3,18 @@ const express = require('express')
 const router = express.Router()
 const {
     getPhones,
-    searchPhone,
+    searchPhoneManufacturer,
+    searchPhoneModel,
     createPhone,
     deletePhone,
     updatePhone,
 } = require('../controllers/phoneController')
 
 
-// get all users          //search by email              //search by name
-router.get('/', getPhones)
-//.get('/email', searchByEmail).get('/name', searchByName)
-// //create new User 
-// router.post('/createUser', createUser)
-// //update user all infomation          //add new address              //remove one of address
-// router.put('/updateUser', updateUser).put('/addAddress', addUserAddress).put
-//     ('/removeAddress', removeUserAddress)
+// get all Phones         
+router.get('/', getPhones).get('/manufacturer', searchPhoneManufacturer).get('/model', searchPhoneModel);
+router.post('/createPhone', createPhone)
+router.put('/updatePhone', updatePhone)
 
-// router.delete('/removeUser', deleteUser)
+router.delete('/deletePhone', deletePhone)
 module.exports = router

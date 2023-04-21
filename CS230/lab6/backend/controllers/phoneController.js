@@ -1,217 +1,118 @@
-const multer = require('multer');
-const upload = multer();
-const Phone = require('../models/phoneModel');
 
-const phoneRegex = /[A-Za-z]+_[A-Za-z0-9]+/;
+const Phone = require('../models/phoneModel');
+const asyncHandler = require('express-async-handler');
+
+
 
 //@desc Get all phones
 //@route  GET /phones
 //@access  Public
-async function getPhones(req, res) {
-    try {
-        const rows = await Phone.find({});
-        res.statusCode = 200;
-        res.end(JSON.stringify({ rows }));
-    } catch (error) {
-        console.log(error);
-    }
+const getPhones = asyncHandler(async (req, res) => {
+    const Phones = await Phone.find({});
+    res.status(200).json(Phones)
+})
 
-}
 
-//@desc Get one type of phones
-//@route  GET /phones/Manufacturer_Model
+//@desc search phone by Manufacturer
 //@route  GET /phones/Manufacturer
-
 //@access  Public
-async function searchPhone(req, res) {
-    //@route  GET /phones/Manufacturer_Model
-    if (phoneRegex.test(req.url)) {
-        try {
-            const phoneName = req.url.split('/')[2].split('_');
-
-            const [Manufacturer, Model] = phoneName;
-
-            const rows = await Phone.find({ Manufacturer, Model });
-            res.statusCode = 200;
-            res.end(JSON.stringify({ rows }));
-        } catch (error) {
-            console.log(error);
-        }
-        //@route  GET /phones/Manufacturer
-    } else if (req.url.match(/^\/phones\/[A-Za-z]+$/)) {
-        const Manufacturer = req.url.split('/')[2];
-        const rows = await Phone.find({ Manufacturer });
-        res.statusCode = 200;
-        res.end(JSON.stringify({ rows }));
+const searchPhoneManufacturer = asyncHandler(async (req, res, next) => {
+    const Phones = await Phone.find({ Manufacturer: req.query.Manufacturer });
+    if (!Phones) {
+        const error = new Error('Phone is not exists');
+        error.status = 401;
+        return next(error);
     }
+    res.status(200).json(Phones)
+})
 
-
-}
+//@desc search phone by Manufacturer and Model 
+//@route  GET /phones/Manufacturer_Model
+//@access  Public
+const searchPhoneModel = asyncHandler(async (req, res, next) => {
+    const Phones = await Phone.findOne({ Manufacturer: req.query.Manufacturer, Model: req.query.Model });
+    if (!Phones) {
+        const error = new Error('Phone is not exists');
+        error.status = 401;
+        return next(error);
+    }
+    res.status(200).json(Phones)
+})
 
 //@desc create new type of phones
 //@route  POST /phones/createPhone
 //@access  Public
-async function createPhone(req, res) {
-
-    try {
-        upload.none()(req, res, async function (err) {
-
-            if (err) {
-                console.log(err);
-                res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
-                return;
-            }
-
-
-            const { manufacturer, model, price } = req.body;
-            //check user fill in all fileds 
-            if (![manufacturer, model, price].every(e => e)) {
-                res.statusCode = 422;
-                res.end(JSON.stringify({ message: `Please add all fields` }));
-            }
-            //check is it exists 
-            const phoneAlreadyExists = await Phone.findOne({ Manufacturer: manufacturer, Model: model });
-
-            if (phoneAlreadyExists) {
-                //already exists 
-                res.statusCode = 409;
-                res.end(JSON.stringify({ message: `Phone : ${manufacturer} ${model} already exists!` }));
-            } else {
-
-                //create new phone 
-                await Phone.create({
-                    Manufacturer: manufacturer,
-                    Model: model,
-                    Price: price,
-                });
-                res.statusCode = 200;
-                res.end(JSON.stringify({ message: `Phone : ${manufacturer} ${model} created successfully` }));
-            }
-        });
-    } catch (error) {
-        console.log(error);
-        res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
+const createPhone = asyncHandler(async (req, res, next) => {
+    //get infomation from body
+    const { Manufacturer, Model, Price } = req.body;
+    //check phone fill in all fileds 
+    if (!Manufacturer || !Model || !Price) {
+        const error = new Error('Please add all fields');
+        error.status = 400;
+        return next(error);
     }
+    //check is it exists 
+    const phoneAlreadyExists = await Phone.findOne({ Manufacturer: Manufacturer, Model: Model });
 
-}
+    if (phoneAlreadyExists) {
+        //already exists 
+        res.statusCode = 409;
+        res.end(JSON.stringify({ message: `Phone : ${Manufacturer} ${Model} already exists!` }));
+    } else {
+        //create new phone 
+        await Phone.create({
+            Manufacturer: Manufacturer,
+            Model: Model,
+            Price: Price,
+        });
+        res.statusCode = 200;
+        res.end(JSON.stringify({ message: `Phone : ${Manufacturer} ${Model} created successfully` }));
+    }
+})
 
 
 //@desc upadte phones deatil
 //@route  PUT /phones/updatePhone
-//bacause search by Manufacturer_Model so just can change price 
 //@access  Public
-async function updatePhone(req, res) {
+const updatePhone = asyncHandler(async (req, res, next) => {
 
-    try {
-        upload.none()(req, res, async function (err) {
-            if (err) {
-                console.log(err);
-                res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
-                return;
-            }
-
-
-            const { manufacturer, model, price } = req.body;
-
-            if (![manufacturer, model, price].every(e => e)) {
-                res.statusCode = 422;
-                res.end(JSON.stringify({ message: `Please provide valid value` }));
-            } else {
-                const phoneAlreadyExists = await Phone.findOne({ Manufacturer: manufacturer, Model: model });
-                if (!phoneAlreadyExists) {
-                    res.statusCode = 404;
-                    res.end(JSON.stringify({ message: `Phone : ${manufacturer} ${model} not found!` }));
-                } else {
-                    await Phone.findOneAndUpdate(
-                        { Manufacturer: manufacturer, Model: model },
-                        {
-                            Price: price,
-                        }
-                    );
-                    res.statusCode = 200;
-                    res.end(JSON.stringify({ message: `Phone : ${manufacturer} ${model} updated successfully` }));
-                }
-            }
-
-        });
-    } catch (error) {
-        console.log(error);
-        res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
+    //find out the phone :
+    const Phones = await Phone.findById(req.query._id);
+    if (!Phones) {
+        const error = new Error('Phone is not exists');
+        error.status = 401;
+        return next(error);
     }
-
-}
+    //update data 
+    const updatedPhone = await Phone.findByIdAndUpdate(req.query._id, req.body, {
+        new: true,
+    })
+    res.status(200).json(updatedPhone)
+})
 
 
 //@desc delete   phones
 //@route  DELETE /phones/Manufacturer_Model
 //@route  DELTE /phones/Manufacturer
-async function deletePhone(req, res) {
-
-    if (phoneRegex.test(req.url)) {
-        //delete one phone /phones/deletePhone/Manufacturer_Model
-        try {
-            const phoneName = req.url.split('/')[3].split('_');
-            if (phoneName.length !== 2) {
-                res.statusCode = 422;
-                res.end(JSON.stringify({ message: `Please add all fields, Manufacturer and Model REQUIRED!` }));
-            } else {
-                const [Manufacturer, Model] = phoneName;
-
-                console.log(Manufacturer, Model);
-                const phone = await Phone.findOne({ Manufacturer, Model });
-
-                if (phone) {
-                    await phone.deleteOne({ Manufacturer, Model });
-                    res.statusCode = 200;
-                    res.end(JSON.stringify({ message: `Phone : ${Manufacturer} ${Model} deleted successfully!` }));
-                } else {
-                    res.statusCode = 404;
-                    res.end(JSON.stringify({ message: `Phone : ${Manufacturer} ${Model} not found!` }));
-                }
-            }
-        } catch (error) {
-            console.log(error);
-            res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
-        }
-
-        //@route  DELTE /phones/Manufacturer
-    } if (req.url.match(/^\/phones\/deletePhone\/[A-Za-z]+$/)) {
-        try {
-
-            upload.none()(req, res, async function (err) {
-                if (err) {
-                    console.log(err);
-                    res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
-                    return;
-                }
-
-                const Manufacturer = req.url.split('/')[3];
-
-                const Phones = await Phone.find({ Manufacturer: Manufacturer });
-
-                if (Phones.length === 0) {
-                    res.statusCode = 404;
-                    res.end(JSON.stringify({ message: `Phone : ${Manufacturer} not found!` }));
-
-                } else {
-                    await Phone.deleteMany(Phone.find({ Manufacturer: Manufacturer }));
-                    res.statusCode = 200;
-                    res.end(JSON.stringify({ message: `Phone : ${Manufacturer} deleted successfully!` }));
-                }
-            });
-        } catch (error) {
-            console.log(error);
-            res.end(JSON.stringify({ error: 'An error occurred while processing the request' }));
-        }
+const deletePhone = asyncHandler(async (req, res, next) => {
+    //find out the phone :
+    const Phones = await Phone.findById(req.query._id);
+    if (!Phones) {
+        const error = new Error('Phone is not exists');
+        error.status = 401;
+        return next(error);
     }
-}
 
+    await Phone.findOneAndRemove({ _id: req.query._id })
+    res.status(200).json({ id: req.query.id })
 
+})
 
 
 module.exports = {
     getPhones,
-    searchPhone,
+    searchPhoneManufacturer,
+    searchPhoneModel,
     createPhone,
     deletePhone,
     updatePhone,

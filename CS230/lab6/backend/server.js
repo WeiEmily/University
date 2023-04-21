@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', require('./routes/userRoutes'));
 //phone routes 
 app.use('/api/phones', require('./routes/phoneRoutes'));
+//order routes 
+app.use('/api/orders', require('./routes/orderRoutes'));
+//error handeer 
 app.use(errorHandler);
 
 // get the server to start listening

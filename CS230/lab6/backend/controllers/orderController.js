@@ -1,5 +1,5 @@
-const multer = require('multer');
-const upload = multer();
+//import middleware 
+const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
 const Phone = require('../models/phoneModel')
@@ -8,194 +8,80 @@ const userControl = require('./usersController')
 //@desc Get all orders
 //@route  GET /orders
 //@access  Public
-async function getOrders(req, res) {
-    try {
-        //set code as connected successfully
-        res.writeHead(200, { "Content-Type": "application/json" });
-        //get all orders in database 
-        const rows = await Order.find({});
-        //return all users
-        res.end(JSON.stringify({ rows }));
-
-    } catch (error) {
-        console.log(error)
-    }
-}
+const getOrders = asyncHandler(async (req, res) => {
+    const Orders = await Order.find({})
+    res.status(200).json(Orders)
+})
 
 
 // @desc    Create new order
 // @route   POST /Order
 // @access  Public
-async function createOrder(req, res) {
-    try {
-        //set code as connected successfully 
-        res.writeHead(200, { "Content-Type": "application/json" });
-
-        upload.none()(req, res, async function (err) {
-            if (err) {
-                console.log(err);
-                res.end(JSON.stringify({ error: "An error occurred while processing the request" }));
-                return;
-            }
-            //get info from body 
-            const { user, text, phone } = req.body;
-
-            //create new order 
-            const order = await Order.create({
-                user, text, phone
-            })
-            //add this order to user of order's owner 
-            userControl.userAddOrder(user, order._id);
-
-            res.end(JSON.stringify({ message: `Order : ${order} created successfully` }));
-        });
-
-    } catch (error) {
-        console.log(error);
-        res.end(JSON.stringify({ error: "An error occurred while processing the request" }));
+const createOrder = asyncHandler(async (req, res) => {
+    //get info from body 
+    const { user, text, phone } = req.body;
+    //check user fill in all blanks 
+    if (!user || !phone) {
+        res.status(400)
+        throw new Error('Please add all fields')
     }
-}
+    //create new order 
+    const order = await Order.create({
+        user, text, phone
+    })
+    //add this order to user of order's owner (addit to user database )
+    userControl.userAddOrder(user, order._id);
+
+    res.status(200)
+    res.end(JSON.stringify({ message: `Order : ${order._id} created successfully` }));
+})
 
 
-// @desc Update an existing user
-// @route   PUT /users/updateUser
+// @desc Update an existing order
+// @route   PUT /orders/updateOrder
 // @access  Public
-async function updateOrder(req, res) {
-    if (req.url === '/orders/updateOrder') {
-        try {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
+const updateOrder = asyncHandler(async (req, res, next) => {
+    //find out the order
+    const order = await Order.findById(req.query._id);
 
-            // use multer parse formData data
-            upload.none()(req, res, async function (err) {
-                if (err) {
-                    console.log(err);
-                    res.end(
-                        JSON.stringify({
-                            error: 'An error occurred while processing the request',
-                        })
-                    );
-                    return;
-                }
-
-                //get information from body
-                const updater = await Order.findById(req.body._id);
-                if (!updater) {
-
-                    throw new Error('Order not found')
-                }
-                //update Order information 
-                const updateOrder = await Order.findByIdAndUpdate(req.body._id, req.body, { new: true, })
-
-                res.end(JSON.stringify({ message: `Order updated successfully`, updateOrder }));
-            });
-        } catch (error) {
-            console.log(error);
-            res.end(JSON.stringify({ error: "An error occurred while processing the request" }));
-        }
-
+    if (!order) {
+        const error = new Error('Order is not exists');
+        error.status = 401;
+        return next(error);
     }
-    //when Url match orderId_phoneId 
-    else if (req.url.match(/^\/orders\/updateOrder\/add\/[A-Za-z0-9]+$/)) {
-
-        try {
-            upload.none()(req, res, async function (err) {
-                //got which one need add to order 
-                const phoneId = req.url.split('/')[4];
-                const orderId = req.body._id;
-
-                //get information from body
-                const updater = await Order.findById(orderId);
-                if (!updater) {
-                    res.status(400)
-                    throw new Error('Order not found')
-                }
-                //get information from body
-                const existPhone = await Phone.findById(phoneId);
-                if (!existPhone) {
-                    res.status(400)
-                    throw new Error('Phone not found')
-
-                }
-                //update Order information 
-                await Order.findByIdAndUpdate(orderId, { $push: { phone: phoneId } }, { new: true, })
-
-                res.end(JSON.stringify({ message: `Add new phone ${phoneId} Order updated successfully`, updateOrder }));
-
-            });
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
-    //when Url match orderId_phoneId 
-    else if (req.url.match(/^\/orders\/updateOrder\/remove\/[A-Za-z0-9]+$/)) {
-
-        try {
-            upload.none()(req, res, async function (err) {
-                //got which one need add to order 
-                const phoneId = req.url.split('/')[4];
-                const orderId = req.body._id;
-
-                //get information from body
-                const updater = await Order.findById(orderId);
-                if (!updater) {
-                    res.status(400)
-                    throw new Error('Order not found')
-                }
-
-                //remove from list 
-                //update Order information 
-                await Order.findByIdAndUpdate(orderId, { $pull: { phone: phoneId } }, { new: true, })
-
-
-
-                res.end(JSON.stringify({ message: `remove phone ${phoneId} from ${orderId} updated successfully` }));
-
-            });
-        } catch (error) {
-            console.log(error);
-        }
-
-
-    }
-}
+    //update Order information 
+    const updateOrder = await Order.findByIdAndUpdate(req.query._id, req.body, {
+        new: true,
+    })
+    res.status(200).json(updateOrder)
+})
 
 
 
 //@desc Delete a user
 //@route   DELETE / users / updateUser
 // @access  Public
-async function deleteOrder(req, res) {
+const deleteOrder = asyncHandler(async (req, res, next) => {
     try {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        upload.none()(req, res, async function (err) {
-            if (err) {
-                console.log(err);
-                res.end(JSON.stringify({ error: "An error occurred while processing the request" }));
-                return;
-            }
-            // get the id from url
-            const orderId = req.url.split("/")[3];
-            //confirm if it exists and populate the user field
-            const existItem = await Order.findOne({ _id: orderId })
+        //find out the order
+        const order = await Order.findById(req.query._id);
 
-            //if it does not exist
-            if (!existItem) {
-                //return error 
-                res.status(400)
-                throw new Error('Order not found')
-            } else {
-                //delete the order and remove it from the user's order array
-                userControl.userDeleteOrder(existItem.user._id, orderId);
-                await Order.deleteOne({ _id: orderId });
-            }
+        if (!order) {
+            const error = new Error('Order is not exists');
+            error.status = 401;
+            return next(error);
+        }
+        //delete the order and remove it from the user's order array
+        userControl.userDeleteOrder(order.user._id, req.query._id);
+        //delete order from the order database 
+        await Order.deleteOne({ _id: req.query._id });
 
-            res.end(JSON.stringify({ message: `Order ${orderId} of user ${existItem.user._id} deleted successfully` }));
-        });
+        res.end(JSON.stringify({ message: `Order ${req.query._id}  deleted successfully` }));
+
     } catch (error) {
         console.log(error)
     }
-}
+})
 
 
 module.exports = {
