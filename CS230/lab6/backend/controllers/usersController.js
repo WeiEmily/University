@@ -51,10 +51,18 @@ const searchByName = asyncHandler(async (req, res, next) => {
 const createUser = asyncHandler(async (req, res) => {
     //get information from body
     const { title, firstname, surname, mobile, email, address_line1, address_line2, town, city, eircode } = req.body;
+    //set valid title 
+    const validTitles = ['Mx', 'Ms', 'Mr', 'Mrs', 'Miss', 'Dr', 'Other'];
+    if (!validTitles.includes(title)) {
+        const error = new Error('please input valid title: Mx, Ms, Mr, Mrs, Miss, Dr, Other');
+        error.status = 401;
+        return next(error);
+    }
     //check user fill in all blanks 
     if (!firstname || !surname || !mobile || !email || !address_line1 || !town || !city || !eircode) {
-        res.status(400)
-        throw new Error('Please add all fields')
+        const error = new Error('Please add all fields')
+        error.status = 401;
+        return next(error);
     }
     // Create user
     const user = await User.create({

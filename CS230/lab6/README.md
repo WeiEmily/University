@@ -14,8 +14,6 @@ This is assigment 6 of CS230
 
 refer :https://github.com/bradtraversy/mern-tutorial/tree/main/frontend/src
 
-refer: https://github.com/bradtraversy/vanilla-node-rest-api
-
 
 
 # API documentation

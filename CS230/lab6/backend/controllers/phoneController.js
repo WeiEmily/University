@@ -1,6 +1,6 @@
-
 const Phone = require('../models/phoneModel');
 const asyncHandler = require('express-async-handler');
+
 //@desc Get all phones
 //@route  GET /phones
 //@access  Public
@@ -8,7 +8,6 @@ const getPhones = asyncHandler(async (req, res) => {
     const Phones = await Phone.find({});
     res.status(200).json(Phones)
 })
-
 
 //@desc search phone by Manufacturer
 //@route  GET /phones/Manufacturer
@@ -104,7 +103,6 @@ const deletePhone = asyncHandler(async (req, res, next) => {
     res.status(200).json({ id: req.query.id })
 
 })
-
 
 module.exports = {
     getPhones,

@@ -4,6 +4,7 @@ const phoneSchema = mongoose.Schema(
     {
         Manufacturer: {
             type: String,
+            //	required	fields
             required: [true, 'Please add Manufacturer'],
         },
         Model: {
