@@ -1,4 +1,4 @@
-package CS211Lab8;
+package CS211Lab7;
 
 /*
  * Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
@@ -23,11 +23,8 @@ package CS211Lab8;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 /**
  * Realization of a list by means of a dynamic array. This is a simplified version
  * of the java.util.ArrayList class.
@@ -141,7 +138,6 @@ public class ArrayList<E> implements List<E> {
             temp[k] = data[k];
         data = temp;                               // start using the new array
     }
-
 
     //---------------- nested ArrayIterator class ----------------
     /**
