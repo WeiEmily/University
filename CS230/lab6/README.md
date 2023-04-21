@@ -10,6 +10,9 @@ This is assigment 6 of CS230
 6. npm i express                      : install express
 7. npm install express-async-handler  : install middleware ...
 
+# Here's a brief description for the database design:
+
+I designed three schemas: User, Order, and Phone. Since I considered the possibility of needing to view Phone data separately, I created a schema for Phone. However, since the Address data is entirely dependent on the existence of User, I treated Address as an array within the User schema. If necessary, a separate schema for Address could be created. Each data has operations for GET, POST, PUT, and DELETE. When creating or deleting orders, I called the userAddOrder and userDeleteOrder functions in the User controller to simultaneously remove the corresponding order under the User schema.
 
 
 refer :https://github.com/bradtraversy/mern-tutorial/tree/main/frontend/src
@@ -30,37 +33,39 @@ refer :https://github.com/bradtraversy/mern-tutorial/tree/main/frontend/src
 
 GET
 Get all users
-http://localhost:5000/users
+http://localhost:5000/api/users/
 -----------------------------------------------------
 
 GET
 search user by email
-http://localhost:5000/users/rwhittington0@oracle.com
+
+http://localhost:5000/api/users/email?email=jludlem1@vkontkte.ru
+
 -----------------------------------------------------
 
 GET
 search user by name
-http://localhost:5000/users/Michaella_Farncomb
+http://localhost:5000/api/users/name?firstname=Ran&surname=ZhuZhu
 -----------------------------------------------------
 
 GET
 show all phones
-http://localhost:5000/phones
+http://localhost:5000/api/phones
 -----------------------------------------------------
 
 GET
 search phone by Manufacturer_Model
-http://localhost:5000/phones/Apple_iPhone14
+http://localhost:5000/api/phones/model?Manufacturer=Huawei&Model=mate12
 -----------------------------------------------------
 
 GET
 search phone by Manufacturer
-http://localhost:5000/phones/Apple
+http://localhost:5000/api/phones/manufacturer?Manufacturer=Huawei
 -----------------------------------------------------
 
 GET
 get all orders
-http://localhost:5000/orders
+http://localhost:5000/api/orders/createOrder
 -----------------------------------------------------
 
 =====================================================
@@ -69,9 +74,9 @@ http://localhost:5000/orders
 
 POST
 create new user
-http://localhost:5000/users/createUser
+http://localhost:5000/api/users/createUser
 
-Bodyform-data: 
+Body urlencoded
 title  Mrs
 
 firstname  Michaella
@@ -95,24 +100,23 @@ eircode  OCA
 
 POST
 create new order
-http://localhost:5000/orders/createOrder
+http://localhost:5000/api/orders/createOrder
 
-Bodyform-data: 
-user  642d9093ce467858b34280d9
+Body urlencoded 
+user  64427bef949e0d721540a48c
 
-text  I bought mate15
-
+text  bought Apple v
 phone  64380851aa3d12e8878bc3ee
 -----------------------------------------------------
 
 POST
 create Phone
-http://localhost:5000/phones/createPhone
+http://localhost:5000/api/phones/createPhone
 
-Bodyform-data: 
-manufacturer  huawei
-model  meta14
-price  1500
+Body urlencoded
+manufacturer  Oppo
+model  one
+price  2345
 -----------------------------------------------------
 
 =====================================================
@@ -122,8 +126,10 @@ price  1500
 
 PUT
 add user's adddress
-http://localhost:5000/users/updateUser/addAddress?_id=6431611aa4707ebad2ffeff7&address_line1=524 Melody Lane&address_line2=Apt 651&town=Mthatha&city=PodolÃ­&eircode=MBG
-Query Params: 
+
+http://localhost:5000/api/users/addAddress?_id=64426c37f9ef4493f1009d66
+
+Body urlencoded
 _id  6431611aa4707ebad2ffeff7
 address_line1  524 Melody Lane
 address_line2  Apt 651
@@ -134,21 +140,20 @@ eircode  MBG
 
 PUT
 remove user's address
-http://localhost:5000/users/updateUser/removeAddress?_id=6431611aa4707ebad2ffeff7&address_id=643bd1af42a9726b99a0c941
-_id  6431611aa4707ebad2ffeff7
-address_id  643bd1af42a9726b99a0c941
+
+http://localhost:5000/api/users/removeAddress?_id=64426c37f9ef4493f1009d66&address=6442777fc6e9f9414f6c42e2
 -----------------------------------------------------
 
 PUT
 UpdateUser's information
-http://localhost:5000/user/updateUser
+http://localhost:5000/api/users/updateUser?_id=64426c37f9ef4493f1009d66
 
-Bodyform-data:
-_id  642d8edbce467858b34280d5
+Query Params
+_id  64426c37f9ef4493f1009d66
 
 title  Mr
 
-firstname  Ran
+firstname  Chrissy w
 
 surname  ZhuZhu
 
@@ -169,66 +174,37 @@ eircode  ertysa
 
 PUT
 update Phone list
-http://localhost:5000/phones/updatePhone
+http://localhost:5000/api/phones/updatePhone?_id=6442c7f4e3702dcb7ee1774e
 
-Bodyform-data: 
-manufacturer  Apple
-
-model  iPhone14Pro
-
+Bodyurlencoded
 price  5555
------------------------------------------------------
-PUT
-add new phone in Phone list
-http://localhost:5000/orders/updateOrder/add/64303c47dd4c74f59d1e6442
 
-Body form-data:
-_id  64380f3358dadf44e294df64
-
-text  I bought Apple
-
-phone  64303c47dd4c74f59d1e6442
------------------------------------------------------
-
-PUT
-remove phone form phone list
-http://localhost:5000/orders/updateOrder/remove/64303c47dd4c74f59d1e6442?_id=64380f3358dadf44e294df64
-
-Query Params
-_id  64380f3358dadf44e294df64
 -----------------------------------------------------
 
 PUT update order
-http://localhost:5000/orders/updateOrder
-Body form-data:
-_id  64380f3358dadf44e294df64
+http://localhost:5000/api/orders/updateOrder?_id=6442ee730b8164c7e0930f70
 
-text  I bought Apple14
+Body urlencoded:
 
-phone  64303c47dd4c74f59d1e6442
+text  bought Apple iphone 14 Plus
+
+phone  64303e9a84f066611e5e00f7
 -----------------------------------------------------
 =====================================================
 
 ### DELETE
 
 DELETE
-delete user by email
-http://localhost:5000/users/deleteUser/mfarncombh@livejournal.com
+delete user by id
+http://localhost:5000/api/users/removeUser?_id=64426c37f9ef4493f1009d66
 -----------------------------------------------------
 
 DELETE delte order
-http://localhost:5000/orders/deleteOrder/643c41cd5043edc46226bd0a
------------------------------------------------------
-
-DELETE delete Manufacturer
-http://localhost:5000/phones/deletePhone/Huawei
-
-/phones/deletePhone/Manufacturer
+http://localhost:5000/api/orders/deleteOrder?_id=6442ee08471c26f3870fffc9
 -----------------------------------------------------
 
 DELETE
 delete one phone
-http://localhost:5000/phones/deletePhone/Oppo_one123
+http://localhost:5000/api/phones/deletePhone?_id=6442c7f4e3702dcb7ee1774e
 
-/phones/deletePhone/Manufacturer_Model
 -----------------------------------------------------
