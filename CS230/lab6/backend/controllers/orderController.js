@@ -13,6 +13,16 @@ const getOrders = asyncHandler(async (req, res) => {
     res.status(200).json(Orders)
 })
 
+//@desc Get orders by ID
+//@route  GET /orders
+//@access  Public
+const getOrdersByID = asyncHandler(async (req, res) => {
+    //find out the order
+    const Orders = await Order.findById(req.query._id);
+    res.status(200).json(Orders)
+})
+
+
 
 // @desc    Create new order
 // @route   POST /Order
@@ -86,6 +96,7 @@ const deleteOrder = asyncHandler(async (req, res, next) => {
 
 module.exports = {
     getOrders,
+    getOrdersByID,
     createOrder,
     updateOrder,
     deleteOrder,

@@ -34,6 +34,9 @@ refer :https://github.com/bradtraversy/mern-tutorial/tree/main/frontend/src
 GET
 Get all users
 http://localhost:5000/api/users/
+
+Get  user by ID
+http://localhost:5000/api/users/:id
 -----------------------------------------------------
 
 GET

@@ -4,12 +4,13 @@ const router = express.Router()
 
 const {
     getOrders,
+    getOrdersByID,
     createOrder,
     updateOrder,
     deleteOrder,
 } = require('../controllers/orderController')
 //get all orders
-router.get('/', getOrders)
+router.get('/', getOrders).get('/search', getOrdersByID)
 //create new order 
 router.post('/createOrder', createOrder)
 //update order 
