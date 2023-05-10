@@ -1,4 +1,4 @@
-package CS211Lab8;
+package CS211Lab7;
 /*
  * Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
  *
@@ -24,44 +24,22 @@ package CS211Lab8;
 
 
 /**
- * Interface for the priority queue ADT.
+ * Interface for a key-value pair.
  *
  * @author Michael T. Goodrich
  * @author Roberto Tamassia
  * @author Michael H. Goldwasser
  */
-public interface PriorityQueue<K,V> {
+public interface Entry<K,V> {
 
     /**
-     * Returns the number of items in the priority queue.
-     * @return number of items
+     * Returns the key stored in this entry.
+     * @return the entry's key
      */
-    int size();
-
+    K getKey();
     /**
-     * Tests whether the priority queue is empty.
-     * @return true if the priority queue is empty, false otherwise
+     * Returns the value stored in this entry.
+     * @return the entry's value
      */
-    boolean isEmpty();
-
-    /**
-     * Inserts a key-value pair and returns the entry created.
-     * @param key     the key of the new entry
-     * @param value   the associated value of the new entry
-     * @return the entry storing the new key-value pair
-     * @throws IllegalArgumentException if the key is unacceptable for this queue
-     */
-    Entry<K,V> insert(K key, V value) throws IllegalArgumentException;
-
-    /**
-     * Returns (but does not remove) an entry with minimal key.
-     * @return entry having a minimal key (or null if empty)
-     */
-    Entry<K,V> min();
-
-    /**
-     * Removes and returns an entry with minimal key.
-     * @return the removed entry (or null if empty)
-     */
-    Entry<K,V> removeMin();
+    V getValue();
 }

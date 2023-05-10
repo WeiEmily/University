@@ -1,4 +1,4 @@
-package CS211Lab8;
+package CS211Lab7;
 /*
  * Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
  *
@@ -23,6 +23,7 @@ package CS211Lab8;
  */
 
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -171,4 +172,33 @@ public class HeapPriorityQueue<K,V> extends AbstractPriorityQueue<K,V> {
                 System.out.println("Invalid right child relationship");
         }
     }
+
+    public boolean Contains(K key, V value){
+        if (heap.isEmpty()) return false;
+        for (Entry<K,V> entry : heap) {
+            if (entry.getKey().equals(key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Entry<K,V> getMax() {
+        if (heap.isEmpty()) return null;
+        int last = heap.size()-1;
+        Entry<K,V> max  = heap.get(last);
+        for (Entry<K,V> entry : heap) {
+            if (compareVal(entry, max) > 0 ) {
+               max = entry;
+            }
+        }
+        return max;
+    }
+
+    private Comparator<V> comp;
+    protected int compareVal(Entry<K,V> a, Entry<K,V> b) {
+        return comp.compare(a.getValue(), b.getValue());
+    }
+
 }

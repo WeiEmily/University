@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package CS211Lab8;
+package CS211Lab7;
 
 import java.util.Comparator;
 
